@@ -1,1 +1,1 @@
-![portfolio](portfolio.png)
+![portfolio](assets/images/portfolio.png)
