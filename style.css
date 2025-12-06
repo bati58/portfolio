@@ -91,6 +91,14 @@ nav ul li a:hover {
   color: #ccc;
 }
 
+/* Put the buttons next to each other */
+.resume-buttons {
+  display: flex;
+  gap: 15px;   /* space between buttons */
+  margin-top: 10px;
+}
+
+/* Keep your original button style */
 .home .btn {
   background-color: #00d9ff;
   color: #0f0f0f;

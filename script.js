@@ -78,3 +78,15 @@ document.querySelectorAll('#nav-links a').forEach(link => {
     hamburger.classList.remove('active');
   });
 });
+document.getElementById("resumeBtn").addEventListener("click", function () {
+  const fileUrl = "./assets/resume.pdf";
+
+  // Open resume in a new tab
+  window.open(fileUrl, "_blank");
+
+  // Force download
+  const link = document.createElement("a");
+  link.href = fileUrl;
+  link.download = "resume.pdf";
+  link.click();
+});
