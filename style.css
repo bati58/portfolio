@@ -432,3 +432,66 @@ footer {
 .hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+
+/* ==============================
+   HOME IMAGE LAYOUT (NEW)
+================================ */
+
+.home-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Text area */
+.home-text {
+  flex: 1;
+}
+
+/* Image container */
+.home-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Profile image style */
+.home-image img {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #00d9ff;
+  box-shadow: 0 0 35px rgba(0, 217, 255, 0.4);
+  transition: transform 0.4s ease;
+}
+
+/* Hover effect */
+.home-image img:hover {
+  transform: scale(1.05);
+}
+
+/* ==============================
+   RESPONSIVE (MOBILE)
+================================ */
+
+@media (max-width: 900px) {
+  .home-content {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .home-image img {
+    width: 240px;
+    height: 240px;
+  }
+
+  .resume-buttons {
+    justify-content: center;
+  }
+}
+
