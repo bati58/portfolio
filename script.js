@@ -79,3 +79,40 @@ document.querySelectorAll('#nav-links a').forEach(link => {
   });
 });
 
+/* ==============================
+   TYPING EFFECT
+================================ */
+
+const texts = [
+  "Full-Stack Developer",
+  "Frontend Developer",
+  "Backend Developer",
+  "Computer Science and Engineering Student"
+];
+
+let count = 0;
+let index = 0;
+let currentText = "";
+let letter = "";
+
+(function type() {
+  if (count === texts.length) {
+    count = 0;
+  }
+
+  currentText = texts[count];
+  letter = currentText.slice(0, ++index);
+
+  document.getElementById("typing-text").textContent = letter;
+
+  if (letter.length === currentText.length) {
+    setTimeout(() => {
+      index = 0;
+      count++;
+    }, 1500);
+  }
+
+  setTimeout(type, 120);
+})();
+
+
