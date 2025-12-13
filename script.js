@@ -87,7 +87,7 @@ const texts = [
   "Full-Stack Developer",
   "Frontend Developer",
   "Backend Developer",
-  "Computer Science and Engineering Student"
+  "Computer Science Student"
 ];
 
 let count = 0;
