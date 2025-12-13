@@ -493,5 +493,32 @@ footer {
   .resume-buttons {
     justify-content: center;
   }
+}/* ==============================
+   TYPING ANIMATION
+================================ */
+
+.typing {
+  font-size: 1.3rem;
+  height: 30px;
 }
+
+/* FIX: color the actual typing text */
+#typing-text {
+  color: #fe0cb1d5; /* pink */
+  font-weight: 500;
+}
+
+.typing::after {
+  content: "|";
+  margin-left: 5px;
+  animation: blink 1s infinite;
+  color: #fe0cb1d5; /* cursor also pink */
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+
 
