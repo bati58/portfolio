@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ContactMessage {
+  id                 String   @id @default(cuid())
+  name               String   @db.VarChar(120)
+  email              String   @db.VarChar(254)
+  subject            String   @db.VarChar(160)
+  message            String   @db.Text
+  submittedAt        DateTime @default(now())
+  processingStatus   String   @default("accepted") @db.VarChar(30)
+  notificationStatus String   @default("pending") @db.VarChar(30)
+  deliveryAttempts   Int      @default(0)
+  lastDeliveryError  String?  @db.VarChar(500)
+  deliveredAt        DateTime?
+  updatedAt          DateTime @updatedAt
+
+  @@index([submittedAt])
+  @@index([notificationStatus])
+}
