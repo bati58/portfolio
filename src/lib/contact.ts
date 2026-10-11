@@ -25,10 +25,10 @@ export class EmailProviderError extends Error {
 }
 
 export const contactSchema = z.object({
-  name: z.string().trim().min(2, "Please enter your name.").max(120, "Name is too long."),
+  name: z.string().trim().min(2, "Please enter at least 2 characters for your name.").max(120, "Your name must be 120 characters or fewer."),
   email: z.string().trim().email("Please enter a valid email address.").max(254),
-  subject: z.string().trim().min(3, "Please add a subject.").max(160, "Subject is too long."),
-  message: z.string().trim().min(10, "Please share a little more detail.").max(5000, "Message is too long."),
+  subject: z.string().trim().min(3, "Please enter a subject with at least 3 characters.").max(160, "Your subject must be 160 characters or fewer."),
+  message: z.string().trim().min(10, "Please enter at least 10 characters so I can understand your message.").max(5000, "Your message must be 5,000 characters or fewer."),
   website: z.string().max(0).optional(),
 });
 
