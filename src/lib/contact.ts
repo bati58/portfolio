@@ -16,11 +16,13 @@ export class EmailConfigurationError extends Error {
 
 export class EmailProviderError extends Error {
   readonly status: number;
+  readonly providerMessage?: string;
 
-  constructor(status: number) {
+  constructor(status: number, providerMessage?: string) {
     super(`Email provider returned ${status}.`);
     this.name = "EmailProviderError";
     this.status = status;
+    this.providerMessage = providerMessage;
   }
 }
 
@@ -73,5 +75,20 @@ export async function sendContactNotification(input: { name: string; email: stri
       text: `Name: ${input.name}\nEmail: ${input.email}\n\n${input.message}`,
     }),
   });
-  if (!response.ok) throw new EmailProviderError(response.status);
+  if (!response.ok) {
+    let providerMessage: string | undefined;
+    try {
+      const body: unknown = await response.json();
+      if (typeof body === "object" && body !== null && "message" in body && typeof body.message === "string") {
+        providerMessage = body.message;
+      }
+    } catch {
+      providerMessage = undefined;
+    }
+    console.error("Email provider rejected contact notification.", {
+      status: response.status,
+      message: providerMessage,
+    });
+    throw new EmailProviderError(response.status, providerMessage);
+  }
 }
