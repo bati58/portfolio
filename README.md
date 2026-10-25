@@ -263,6 +263,14 @@ Confirm that:
 - The sender identity is verified
 - The API key is valid
 - The destination address is correct
+- The same values are configured in Vercel under **Project Settings → Environment Variables** for the
+  environments where the deployment runs (`Production`, and `Preview` if needed)
+- A new deployment was created after changing the Vercel variables
+
+The local `.env` file is not deployed to Vercel. A local submission can therefore work while the
+public deployment has missing or different email settings. Resend's `onboarding@resend.dev` sender
+is intended for testing and has recipient restrictions; use a domain you verified in Resend for
+production. Keep `EMAIL_API_KEY` server-only and rotate it immediately if it has been exposed.
 
 ### Admin recovery endpoints return `503`
 

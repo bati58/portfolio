@@ -26,6 +26,12 @@ export class EmailProviderError extends Error {
   }
 }
 
+function providerErrorMessage(error: EmailProviderError) {
+  return error.providerMessage
+    ? `Email provider rejected the notification: ${error.providerMessage}`.slice(0, 500)
+    : "Email provider rejected the notification.";
+}
+
 export const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter at least 2 characters for your name.").max(120, "Your name must be 120 characters or fewer."),
   email: z.string().trim().email("Please enter a valid email address.").max(254),
@@ -91,4 +97,11 @@ export async function sendContactNotification(input: { name: string; email: stri
     });
     throw new EmailProviderError(response.status, providerMessage);
   }
+}
+
+export function getContactDeliveryError(error: unknown) {
+  if (error instanceof EmailProviderError) return providerErrorMessage(error);
+  if (error instanceof EmailConfigurationError) return "Email provider configuration is incomplete.";
+  if (error instanceof EmailNotConfiguredError) return "Email provider is not configured.";
+  return "Notification provider unavailable.";
 }

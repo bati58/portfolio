@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hasAdminToken, isAuthorizedAdmin } from "@/lib/admin";
-import { sendContactNotification } from "@/lib/contact";
+import { getContactDeliveryError, sendContactNotification } from "@/lib/contact";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!hasAdminToken()) return NextResponse.json({ error: "Admin access is not configured." }, { status: 503 });
@@ -30,13 +30,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     });
 
     return NextResponse.json({ ok: true, message: { id: updated.id, notificationStatus: updated.notificationStatus } });
-  } catch {
+  } catch (error) {
     await prisma.contactMessage.update({
       where: { id },
       data: {
         notificationStatus: "failed",
         deliveryAttempts: { increment: 1 },
-        lastDeliveryError: "Notification provider unavailable.",
+        lastDeliveryError: getContactDeliveryError(error),
       },
     });
     return NextResponse.json({ error: "Retry failed." }, { status: 502 });

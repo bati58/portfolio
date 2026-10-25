@@ -6,6 +6,7 @@ import {
   EmailConfigurationError,
   EmailNotConfiguredError,
   EmailProviderError,
+  getContactDeliveryError,
   sendContactNotification,
 } from "@/lib/contact";
 
@@ -53,11 +54,7 @@ export async function POST(request: NextRequest) {
       data: {
         notificationStatus: emailNotConfigured || emailConfigurationError ? "pending" : "failed",
         deliveryAttempts: { increment: 1 },
-        lastDeliveryError: emailNotConfigured
-          ? "Email provider is not configured."
-          : emailConfigurationError
-            ? "Email provider configuration is incomplete."
-            : "Notification provider unavailable.",
+        lastDeliveryError: getContactDeliveryError(error),
       },
     });
     const message = emailNotConfigured || emailConfigurationError
