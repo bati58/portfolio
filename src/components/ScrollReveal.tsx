@@ -20,8 +20,11 @@ export function ScrollReveal({ children, className = "", delay = 0 }: ScrollReve
 
     element.style.setProperty("--reveal-delay", `${delay}ms`);
     const observer = new IntersectionObserver(([entry]) => {
-      element.classList.toggle("is-visible", entry.isIntersecting);
-    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+      if (!entry.isIntersecting) return;
+
+      element.classList.add("is-visible");
+      observer.unobserve(element);
+    }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
 
     observer.observe(element);
     return () => observer.disconnect();
