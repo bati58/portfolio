@@ -13,14 +13,18 @@ export function ScrollReveal({ children, className = "", delay = 0 }: ScrollReve
 
   useEffect(() => {
     const element = elementRef.current;
-    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      !element ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)
+    ) {
       element?.classList.add("is-visible");
       return;
     }
 
     element.style.setProperty("--reveal-delay", `${delay}ms`);
     const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
+      if (!entry?.isIntersecting) return;
 
       element.classList.add("is-visible");
       observer.unobserve(element);
@@ -30,5 +34,9 @@ export function ScrollReveal({ children, className = "", delay = 0 }: ScrollReve
     return () => observer.disconnect();
   }, [delay]);
 
-  return <div ref={elementRef} className={`scroll-reveal ${className}`}>{children}</div>;
+  return (
+    <div ref={elementRef} className={`scroll-reveal ${className}`}>
+      {children}
+    </div>
+  );
 }
