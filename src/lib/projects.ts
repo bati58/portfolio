@@ -120,7 +120,7 @@ export const projects: PortfolioProject[] = [
   },
   {
     slug: "usms",
-    title: "USMS Stock Management System",
+    title: "Stock Management System",
     kind: "software",
     description: "A full-stack, role-based university stock and inventory control system for managing receipts, requisitions, transfers, fixed assets, audits, and reporting across departments.",
     technologies: ["React", "Vite", "Node.js", "Express", "PostgreSQL", "JWT", "Tailwind CSS"],
